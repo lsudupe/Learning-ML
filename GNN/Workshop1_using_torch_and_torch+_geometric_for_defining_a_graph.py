@@ -2,6 +2,9 @@ import torch
 from torch_geometric.data import Data
 import networkx as nx
 from torch_geometric.utils.convert import to_networkx
+import matplotlib.pyplot as plt
+
+
 " Define a graph "
 
 # a graph with 4 nodes
@@ -11,7 +14,6 @@ edge_list = torch.tensor([
                         ], dtype=torch.long)
 
 # 6 Features for each node (4x6 - Number of nodes x NUmber of features)
-
 node_features = torch.tensor([
                             [-8, 1, 5, 8, 2, -3], # Features of Node 0
                             [-1, 0, 2, -3, 0, 1], # Features of Node 1
@@ -19,8 +21,7 @@ node_features = torch.tensor([
                             [0, 1, 4, -2, 3, 4], # Features of Node 3
                             ],dtype=torch.long)
 
-# 1 Weight for each edge 
-
+# 1 Weight for each edge
 edge_weight = torch.tensor([
                             [35.], # Weight for nodes (0,1)
                             [48.], # Weight for nodes (0,2)
@@ -49,3 +50,4 @@ print("Number of weights per edge (edge-features): ", data.num_edge_features, "\
 
 G = to_networkx(data)
 nx.draw_networkx(G)
+plt.savefig("filename.png")
