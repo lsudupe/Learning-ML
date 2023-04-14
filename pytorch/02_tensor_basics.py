@@ -9,7 +9,7 @@ x = torch.empty(3) #vector
 print(x)
 x = torch.empty(2,3) #matrix
 print(x)
-x torch.empty(2,2,3) #tensor 3 dimensions
+x = torch.empty(2,2,3) #tensor 3 dimensions
 print(x)
 
 # create a only ones object
