@@ -2,6 +2,7 @@
 *.ipynb_checkpoints
 *Cora
 *./HIV_gnn/data
+*goxo.py
 
 
 
