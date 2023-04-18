@@ -28,6 +28,7 @@ plt.imshow(grid)
 # check our packages versions
 import torch
 import torch_geometric
+from torch_geometric.data import Data
 from tqdm import tqdm
 
 print(f"torch version/t/t: {torch.__version__}")
@@ -68,13 +69,43 @@ class MoleculeDataset(Dataset):
             label = self.get_labels()
 
             # Create data object
-
+            data = Data(x = node_feats,
+                        edge_index = edge_index,
+                        edge_attr = edge_feats,
+                        y= label,
+                        smiles = mol["smiles"]
+                        )
 
     def get_node_features(self):
+    '''This will return a matrix /2d array of shape
+    [number of nodes, node feature size]'''
+        all_node_features = []
+        for atom in mol.GetAtoms():
+            node_feats = []
+            # Feature 1: Atomic number
+            node_feats.append(atom.GetAtomicNum())
+            # Feature 2: Atom degree
+            node_feats.append(atom.GetDegree())
+            # Feature 3: Formal charge
+            node_feats.append(atom.GetFormalCharge())
+            # Feature 4: Hybridization
+            node_feats.append(atom.GetHybridization())
+            # Feature 5: Aromaticity
+            node_feats.append(atom.GetIsAromatic())
 
-    def get_edge_features(self):
+        # append node features to matrix
+        all_node_features.append(node_feats)
 
-    def get_adjacency_info(self):
+        all_node_features = np.sarray(all_node_features)
+        return torch.tensor(all_node_features, dtype=torch.float)
+
+    def get_edge_features(self, mol):
+        all_bond_features = []
+        for edge in mol.GetBonds():
+            edge_feats = []
+            edge_feats.append(e)
+
+    def get_adjacency_info(self, mol):
 
     def get_labels(self):
 
