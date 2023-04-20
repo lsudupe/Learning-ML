@@ -40,3 +40,21 @@ G = to_networkx(data, to_undirected=True)
 nx.draw_networkx(G, node_color=data.y)
 plt.show()
 #plt.savefig("filename.png")
+
+
+###Implementing Graph Neural Networks (GNNs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
