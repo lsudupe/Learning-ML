@@ -3,9 +3,6 @@ import networkx as nx
 from torch_geometric.utils import to_networkx
 import matplotlib.pyplot as plt
 
-
-
-
 # check our data
 dataset = KarateClub()
 print(f"Dataset:{dataset}")
@@ -28,7 +25,6 @@ print(f"contains isolated nodes: {data.has_isolated_nodes()}")
 print(f"contains self-loops: {data.has_self_loops()}")
 print(f"is undirected: {data.is_undirected()}")
 
-nx.draw(data, with_labels=True)
 
 #
 data.edge_index.T #this representation is known as the COO format (coordinate format)
@@ -43,7 +39,33 @@ plt.show()
 
 
 ###Implementing Graph Neural Networks (GNNs)
+import torch
+from torch.nn import Linear
+from torch_geometric.nn import GCNConv
 
+class GCN(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        torch.manual_seed(1234)
+        self.conv1 = GCNConv(data.num_features, 4) #it stored the output as a attribute of the GCNmodel
+        self.conv2 = GCNConv(3, 3)
+        self.conv3 = GCNConv(3, 2)
+        self.classifier = Linear(2, len(data.keys))
+
+    def forward(self, x, edge_index):
+        h = self.conv1(x, edge_index)
+        h = h.tanh()
+        h = self.conv2(h, edge_index)
+        h = h.tanh()
+        h = self.conv3(h, edge_index)
+        h = h.tanh() #Final GNN embedding space
+        #Apply a final (linear) classifier
+        out = self.classifier(h)
+
+        return out, h
+
+model = GCN()
+print(model)
 
 
 
