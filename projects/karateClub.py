@@ -79,6 +79,20 @@ plt.show()
 
 ###Train the model
 
+#define loss and optimizer
+criterion = torch.nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+
+def train():
+    optimizer.zero_grad() #clear gradients
+    out, h = model(data.x, data.edge_index) #perform a single forward
+    loss = criterion(out[data.train_mask], data.y[data.train_mask]) #compute the loss only with the trainning nodes
+    loss.backward() #compute derivates, derive gradients
+    optimizer.step() #update parameters
+
+    return loss, h
+
+
 
 
 
