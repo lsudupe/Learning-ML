@@ -83,7 +83,7 @@ plt.show()
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
-def train():
+def train(data):
     optimizer.zero_grad() #clear gradients
     out, h = model(data.x, data.edge_index) #perform a single forward
     loss = criterion(out[data.train_mask], data.y[data.train_mask]) #compute the loss only with the trainning nodes
@@ -93,6 +93,16 @@ def train():
     return loss, h
 
 
+### Define trainning loop
+
+for epoch in range(100):
+    loss, h = train(data)
+    h_np = h.detach().cpu().numpy()
+    #Visualize the embedding
+    if epoch % 10 == 0:
+        plt.scatter(h_np[:, 0], h_np[:, 1], c=data.y, cmap='viridis', alpha=0.7)
+        plt.show()
+        print(f'epoch: {epoch + 1}, loss: {loss}')
 
 
 
