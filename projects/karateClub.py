@@ -48,8 +48,8 @@ class GCN(torch.nn.Module):
         super().__init__()
         torch.manual_seed(1234)
         self.conv1 = GCNConv(data.num_features, 4) #it stored the output as a attribute of the GCNmodel
-        self.conv2 = GCNConv(3, 3)
-        self.conv3 = GCNConv(3, 2)
+        self.conv2 = GCNConv(4, 4)
+        self.conv3 = GCNConv(4, 2)
         self.classifier = Linear(2, len(data.keys))
 
     def forward(self, x, edge_index):
@@ -67,10 +67,17 @@ class GCN(torch.nn.Module):
 model = GCN()
 print(model)
 
+#out, h = model(data.x, data.edge_index)
+_, h = model(data.x, data.edge_index) #model() is a instance of the GCN class
+
+print(f"Embedding shape:{list(h.shape)}")
+# Detach the tensor from the computation graph and convert it to a NumPy array
+h_np = h.detach().cpu().numpy()
+plt.scatter(h_np[:, 0], h_np[:, 1], c=data.y, cmap='viridis', alpha=0.7)
+plt.show()
 
 
-
-
+###Train the model
 
 
 
