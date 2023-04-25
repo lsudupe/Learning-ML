@@ -90,19 +90,32 @@ def train(data):
     loss.backward() #compute derivates, derive gradients
     optimizer.step() #update parameters
 
-    return loss, h
+    accuracy = {}
+    # Calculate trainning accuracy in our four training mask examples
+    predicted_classes = torch.argmax(out[data.train_mask], axis =1)
+    target_classes = data.y[data.train_mask]
+    accuracy['train'] = torch.mean(
+        torch.where(predicted_classes == target_classes, 1, 0).float())
+
+    # Calculate whole graph accuracy
+    predicted_classes = torch.argmax(out, axis=1)
+    target_classes = data.y
+    accuracy['val'] = torch.mean(
+        torch.where(predicted_classes == target_classes, 1, 0).float())
+
+    return loss, h, accuracy
 
 
 ### Define trainning loop
 
 for epoch in range(100):
-    loss, h = train(data)
+    loss, h, accuracy = train(data)
     h_np = h.detach().cpu().numpy()
     #Visualize the embedding
     if epoch % 10 == 0:
         plt.scatter(h_np[:, 0], h_np[:, 1], c=data.y, cmap='viridis', alpha=0.7)
         plt.show()
-        print(f'epoch: {epoch + 1}, loss: {loss}')
+        print(f'epoch: {epoch + 1}, loss: {loss}, accuracy: {accuracy}')
 
 
 
