@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 G = nx.karate_club_graph()
 type(G)
 
+G.is_directed()
+
 nx.draw_networkx(G, with_labels=True)
 plt.show()
 
@@ -39,6 +41,52 @@ def average_clustering_coefficient(G):
 
 average_clustering_coefficient(G)
 average_clustering_coefficient(noG)
+
+
+#Question 3: What is the PageRank value for node 0 (node with id 0) after one PageRank iteration?
+
+def one_iter_pagerank(G, b, r0, node_id):
+    #create out variable of interest
+    r1 = 0
+
+    #create a map to store our info
+    node_neigh = {}
+    #for node_id, extract neighbours nodes and their degrees
+    for node in G.neighbors(node_id):
+        node_neigh[node] = G.degree[node]
+    #first part of the pagerank equation
+    for k, v in node_neigh:
+        r1 += b * (r0/ v)
+    #second part of the pagerank equation
+
+    r1 += (1-b)* (1/G.number_of_nodes())
+
+    return r1
+
+beta = 0.8
+r0 = 1.0 / G.number_of_nodes()
+node = 0
+r1 = one_iter_pagerank(G, beta, r0, node)
+print("The PageRank value for node 0 after one iteration is {}".format(r1))
+
+
+
+#convert karateclub graph in a directed one
+G_direc = nx.DiGraph(G)
+G_direc.is_directed()
+
+node_id = 3
+
+
+
+
+
+
+
+
+
+
+
 
 
 
