@@ -69,6 +69,11 @@ node = 0
 r1 = one_iter_pagerank(G, beta, r0, node)
 print("The PageRank value for node 0 after one iteration is {}".format(r1))
 
+#Question 4: What is the (raw) closeness centrality for the karate club network node 5?
+
+def closeness_centrality(G, n=5):
+
+
 
 
 #convert karateclub graph in a directed one
@@ -77,10 +82,15 @@ G_direc.is_directed()
 
 node_id = 3
 
-
-
-
-
+#shortest path from node 5 to all the others, save as dic
+shortest = nx.shortest_path_length(G, 5)
+#shortest path sum
+shortest_sum = sum(shortest.values())
+#calculate raw_closennes
+if shortest_sum == 0:
+    raw_closeness = 0
+else:
+    raw_closeness = ()
 
 
 
