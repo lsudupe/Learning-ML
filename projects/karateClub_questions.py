@@ -102,7 +102,7 @@ print(torch.__version__)
 # it into torch.LongTensor. What is the torch.sum value of pos_edge_index tensor?
 
 def graph_to_edge_list(G):
-  # TODO: Implement the function that returns the edge list of
+  # ODO: Implement the function that returns the edge list of
   # an nx.Graph. The returned edge_list should be a list of tuples
   # where each tuple is a tuple representing an edge connected
   # by two nodes.
@@ -115,7 +115,7 @@ def graph_to_edge_list(G):
   return edge_list
 
 def edge_list_to_tensor(edge_list):
-  # TODO: Implement the function that transforms the edge_list to
+  # ODO: Implement the function that transforms the edge_list to
   # tensor. The input edge_list is a list of tuples and the resulting
   # tensor should have the shape [2 x len(edge_list)].
 
