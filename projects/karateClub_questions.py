@@ -93,14 +93,45 @@ G_direc = nx.DiGraph(G)
 G_direc.is_directed()
 
 
+###### 2 PART, graphs to tensors
+import torch
+print(torch.__version__)
 
 
+#Question 5: Get the edge list of the karate club network and transform
+# it into torch.LongTensor. What is the torch.sum value of pos_edge_index tensor?
+
+def graph_to_edge_list(G):
+  # TODO: Implement the function that returns the edge list of
+  # an nx.Graph. The returned edge_list should be a list of tuples
+  # where each tuple is a tuple representing an edge connected
+  # by two nodes.
+
+  edge_list = []
+  ############# Your code here ############
+  edge_list = list(nx.edges(G))
+  # ed_l = list(G.edges())
+  #########################################
+  return edge_list
+
+def edge_list_to_tensor(edge_list):
+  # TODO: Implement the function that transforms the edge_list to
+  # tensor. The input edge_list is a list of tuples and the resulting
+  # tensor should have the shape [2 x len(edge_list)].
+
+  edge_index = torch.tensor([])
+  ############# Your code here ############
+  edge_index = torch.tensor(edge_list,dtype=torch.long).permute(1,0)
+  #########################################
+  return edge_index
+
+pos_edge_list = graph_to_edge_list(G)
+pos_edge_index = edge_list_to_tensor(pos_edge_list)
+print("The pos_edge_index tensor has shape {}".format(pos_edge_index.shape))
+print("The pos_edge_index tensor has sum value {}".format(torch.sum(pos_edge_index)))
 
 
-
-
-
-
+edge_index = edge_list.type(torch.long)
 
 
 
