@@ -135,6 +135,138 @@ edge_index = edge_list.type(torch.long)
 
 
 
+#Question 6: Please implement following function that samples negative edges.
+# Then answer which edges (edge_1 to edge_5) are the negative edges in the karate club network?
+
+def sample_negative_edges(G, num_neg_samples):
+  # TODO: Implement the function that returns a list of negative edges.
+  # The number of sampled negative edges is num_neg_samples. You do not
+  # need to consider the corner case when the number of possible negative edges
+  # is less than num_neg_samples. It should be ok as long as your implementation
+  # works on the karate club network. In this implementation, self loops should
+  # not be considered as either a positive or negative edge. Also, notice that
+  # the karate club network is an undirected graph, if (0, 1) is a positive
+  # edge, do you think (1, 0) can be a negative one?
+
+  neg_edge_list = []
+
+  ############# Your code here ############
+
+  #########################################
+
+  return neg_edge_list
+
+# Sample 78 negative edges
+neg_edge_list = sample_negative_edges(G, len(pos_edge_list))
+
+# Transform the negative edge list to tensor
+neg_edge_index = edge_list_to_tensor(neg_edge_list)
+print("The neg_edge_index tensor has shape {}".format(neg_edge_index.shape))
+
+# Which of following edges can be negative ones?
+edge_1 = (7, 1)
+edge_2 = (1, 33)
+edge_3 = (33, 22)
+edge_4 = (0, 4)
+edge_5 = (4, 2)
+
+############# Your code here ############
+## Note:
+## 1: For each of the 5 edges, print whether it can be negative edge
+
+#########################################
+
+
+#####EMBEDING
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+
+print(torch.__version__)
+
+
+# Initialize an embedding layer
+# Suppose we want to have embedding for 4 items (e.g., nodes)
+# Each item is represented with 8 dimensional vector
+
+emb_sample = nn.Embedding(num_embeddings=4, embedding_dim=8)
+print("sample embedding layer: {}".format(emb_sample))
+
+#We can select items from the embedding matrix, by using Tensor indices
+# Select an embedding in emb_sample
+id = torch.LongTensor([1])
+print(emb_sample(id))
+
+# Select multiple embeddings
+ids = torch.LongTensor([1, 3])
+print(emb_sample(ids))
+
+# Get the shape of the embedding weight matrix
+shape = emb_sample.weight.data.shape
+print(shape)
+
+# Overwrite the weight to tensor with all ones
+emb_sample.weight.data = torch.ones(shape)
+
+# Let's check if the emb is indeed initilized
+ids = torch.LongTensor([0, 3])
+print(emb_sample(ids))
+
+#We want to have 16 dimensional vector for each node in the karate club network.
+#We want to initalize the matrix under uniform distribution, in the range of  [0,1) . We suggest you using torch.rand.
+G = nx.karate_club_graph()
+
+# Please do not change / reset the random seed
+torch.manual_seed(1)
+
+def create_node_emb(num_node=34, embedding_dim=16):
+  # TODO: Implement this function that will create the node embedding matrix.
+  # A torch.nn.Embedding layer will be returned. You do not need to change
+  # the values of num_node and embedding_dim. The weight matrix of returned
+  # layer should be initialized under uniform distribution.
+
+  emb = None
+
+  ############# Your code here ############
+  emb = nn.Embedding(num_node, embedding_dim)
+  #########################################
+
+  return emb
+
+emb = create_node_emb()
+ids = torch.LongTensor([0, 3])
+
+# Print the embedding layer
+print("Embedding: {}".format(emb))
+
+# An example that gets the embeddings for node 0 and 3
+print(emb(ids))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
